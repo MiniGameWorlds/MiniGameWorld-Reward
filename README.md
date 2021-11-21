@@ -1,6 +1,7 @@
 # Description
 - Example `third-party` plugin of `MiniGameWorld`
 - Can give rewards to participants when minigame has finished
+- [Release](https://github.com/MiniGameWorlds/MiniGameWorld/discussions/6)
 
 # Rewards
 - Items
