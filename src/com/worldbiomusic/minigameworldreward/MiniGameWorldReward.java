@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.api.MiniGameWorld;
+import com.worldbiomusic.minigameworld.util.Utils;
 
 public class MiniGameWorldReward extends JavaPlugin {
 	private YamlManager yamlManager;
@@ -12,7 +13,7 @@ public class MiniGameWorldReward extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		super.onEnable();
-		getLogger().info(ChatColor.GREEN + "MiniGameWorld Reward ON");
+		Utils.info(ChatColor.GREEN + "MiniGameWorld Reward ON");
 
 		// data manager with config
 		RewardDataManager rewardDataManager = new RewardDataManager();
@@ -22,7 +23,7 @@ public class MiniGameWorldReward extends JavaPlugin {
 
 		// Yaml manager
 		this.yamlManager = new YamlManager(getDataFolder());
-		yamlManager.registerMember(rewardDataManager);
+		this.yamlManager.registerMember(rewardDataManager);
 
 		// register observer to MiniGameWorld
 		MiniGameWorld mw = MiniGameWorld.create(MiniGameWorld.API_VERSION);
@@ -32,6 +33,7 @@ public class MiniGameWorldReward extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		super.onDisable();
+		Utils.info(ChatColor.RED + "MiniGameWorld Reward OFF");
 
 		this.yamlManager.saveAllData();
 	}
