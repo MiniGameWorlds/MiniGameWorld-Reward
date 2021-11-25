@@ -2,18 +2,22 @@ package com.worldbiomusic.minigameworldreward;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
+import com.worldbiomusic.minigameworld.minigameframes.MiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.SoloBattleMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.SoloMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamBattleMiniGame;
+import com.worldbiomusic.minigameworld.minigameframes.TeamBattleMiniGame.Team;
 import com.worldbiomusic.minigameworld.minigameframes.TeamMiniGame;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGamePlayerData;
 import com.worldbiomusic.minigameworld.observer.MiniGameEventNotifier.MiniGameEvent;
 import com.worldbiomusic.minigameworld.observer.MiniGameObserver;
+import com.worldbiomusic.minigameworld.util.Setting;
+import com.worldbiomusic.minigameworld.util.Utils;
 
 public class RewardManager implements MiniGameObserver {
 	private RewardDataManager rewardDataManager;
@@ -36,22 +40,60 @@ public class RewardManager implements MiniGameObserver {
 				return;
 			}
 
-			List<Entry<Player, Integer>> entries = minigame.getScoreRank();
+			Class<? extends MiniGame> minigameType = getMiniGameType(minigame);
+			if (minigameType == TeamBattleMiniGame.class) {
+				@SuppressWarnings("unchecked")
+				List<Team> rankList = (List<Team>) minigame.getRank();
+				rankList.forEach(t -> Utils.debug(t.getRandomMember().getName()));
 
-			for (int i = 0; i < entries.size(); i++) {
-				if (this.existRankReward(i + 1)) {
-					Player p = entries.get(i).getKey();
+				for (int i = 0; i < rankList.size(); i++) {
+					if (this.existRankReward(i + 1)) {
+						List<Player> players = rankList.get(i).getPlayers();
 
-					// items
-					this.giveRewardItems(p, i + 1);
-					// xp
-					this.giveRewardXp(p, i + 1);
+						for (Player p : players) {
+							// items
+							this.giveRewardItems(p, i + 1);
+							// xp
+							this.giveRewardXp(p, i + 1);
 
-					p.sendMessage("Got rewards");
+							p.sendMessage("Got rewards");
+						}
+					}
+				}
+			} else {
+				@SuppressWarnings("unchecked")
+				List<MiniGamePlayerData> rankList = (List<MiniGamePlayerData>) minigame.getRank();
+
+				for (int i = 0; i < rankList.size(); i++) {
+					if (this.existRankReward(i + 1)) {
+						Player p = rankList.get(i).getPlayer();
+
+						// items
+						this.giveRewardItems(p, i + 1);
+						// xp
+						this.giveRewardXp(p, i + 1);
+
+						p.sendMessage("Got rewards");
+					}
 				}
 			}
+
 		}
 
+	}
+
+	private Class<? extends MiniGame> getMiniGameType(MiniGameAccessor minigame) {
+		Class<?> clazz = minigame.getClassType();
+		if (SoloMiniGame.class.isAssignableFrom(clazz)) {
+			return SoloMiniGame.class;
+		} else if (SoloBattleMiniGame.class.isAssignableFrom(clazz)) {
+			return SoloBattleMiniGame.class;
+		} else if (TeamMiniGame.class.isAssignableFrom(clazz)) {
+			return TeamMiniGame.class;
+		} else if (TeamBattleMiniGame.class.isAssignableFrom(clazz)) {
+			return TeamBattleMiniGame.class;
+		}
+		return null;
 	}
 
 	private boolean checkMiniGameType(MiniGameAccessor minigame) {
@@ -72,11 +114,13 @@ public class RewardManager implements MiniGameObserver {
 	}
 
 	private boolean checkParticipantPercent(MiniGameAccessor minigame) {
-		int maxPlayerCount = (int) minigame.getSettings().get("max-player-count");
+		int maxPlayerCount = (int) minigame.getSettings().get(Setting.MINIGAMES_MAX_PLAYER_COUNT);
 		int leavingPlayerCount = minigame.getPlayers().size();
 		double participantPercent = (double) leavingPlayerCount / maxPlayerCount;
 
 		double minPercent = (int) this.rewardDataManager.getData().get("min-participant-percent") / 100.0;
+
+		minigame.getPlayers().forEach(p -> p.sendMessage("participant check: " + (minPercent <= participantPercent)));
 
 		return minPercent <= participantPercent;
 	}
