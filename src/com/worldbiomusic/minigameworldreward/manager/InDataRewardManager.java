@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntIterable;
 import org.bukkit.inventory.ItemStack;
 
 import com.wbm.plugin.util.data.yaml.YamlHelper;
@@ -76,12 +75,8 @@ public class InDataRewardManager implements YamlMember {
 	}
 
 	@Override
-	public void reload() {
-	}
-
-	@Override
-	public void setData(YamlManager yaml, FileConfiguration config) {
-		this.yamlManager = yaml;
+	public void setData(YamlManager yamlManager, FileConfiguration config) {
+		this.yamlManager = yamlManager;
 		
 		if (config.isSet("data")) {
 			this.data = YamlHelper.ObjectToMap(config.getConfigurationSection("data"));

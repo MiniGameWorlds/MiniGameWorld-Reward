@@ -85,6 +85,8 @@ public class InDataRewardGiver implements MiniGameObserver {
 					givePercentRewards(p, rankPercent);
 					p.sendMessage("Got rewards from percent data");
 				});
+				
+				break;
 			}
 		}
 	}

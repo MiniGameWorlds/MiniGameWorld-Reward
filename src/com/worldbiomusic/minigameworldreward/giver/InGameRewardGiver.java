@@ -50,44 +50,6 @@ public class InGameRewardGiver implements MiniGameObserver {
 	}
 
 	private void giveRankReward(MiniGameAccessor minigame) {
-//		Class<? extends MiniGame> minigameType = getMiniGameType(minigame);
-//		if (minigameType == TeamBattleMiniGame.class) {
-//			@SuppressWarnings("unchecked")
-//			List<Team> rankList = (List<Team>) minigame.getRank();
-//			rankList.forEach(t -> Utils.debug(t.getRandomMember().getName()));
-//
-//			for (int i = 0; i < rankList.size(); i++) {
-//				if (this.existRankReward(i + 1)) {
-//					List<Player> players = rankList.get(i).getPlayers();
-//
-//					for (Player p : players) {
-//						// items
-//						this.giveRankRewardItems(p, i + 1);
-//						// xp
-//						this.giveRankRewardXp(p, i + 1);
-//
-//						p.sendMessage("Got rewards");
-//					}
-//				}
-//			}
-//		} else {
-//			@SuppressWarnings("unchecked")
-//			List<MiniGamePlayerData> rankList = (List<MiniGamePlayerData>) minigame.getRank();
-//
-//			for (int i = 0; i < rankList.size(); i++) {
-//				if (this.existRankReward(i + 1)) {
-//					Player p = rankList.get(i).getPlayer();
-//
-//					// items
-//					this.giveRankRewardItems(p, i + 1);
-//					// xp
-//					this.giveRankRewardXp(p, i + 1);
-//
-//					p.sendMessage("Got rewards");
-//				}
-//			}
-//		}
-
 		List<? extends MiniGameRankComparable> rankList = minigame.getRank();
 
 		for (int i = 0; i < rankList.size(); i++) {
@@ -117,7 +79,7 @@ public class InGameRewardGiver implements MiniGameObserver {
 					for (Player p : rankList.get(i).getPlayers()) {
 						this.givePercentRewards(p, dataPercent);
 
-						p.sendMessage("Got rewards");
+						p.sendMessage("Got rewards: " + rankPercent);
 					}
 
 					break;
@@ -125,20 +87,6 @@ public class InGameRewardGiver implements MiniGameObserver {
 			}
 		}
 	}
-
-//	private Class<? extends MiniGame> getMiniGameType(MiniGameAccessor minigame) {
-//		Class<?> clazz = minigame.getClassType();
-//		if (SoloMiniGame.class.isAssignableFrom(clazz)) {
-//			return SoloMiniGame.class;
-//		} else if (SoloBattleMiniGame.class.isAssignableFrom(clazz)) {
-//			return SoloBattleMiniGame.class;
-//		} else if (TeamMiniGame.class.isAssignableFrom(clazz)) {
-//			return TeamMiniGame.class;
-//		} else if (TeamBattleMiniGame.class.isAssignableFrom(clazz)) {
-//			return TeamBattleMiniGame.class;
-//		}
-//		return null;
-//	}
 
 	private boolean checkMiniGameType(MiniGameAccessor minigame) {
 		@SuppressWarnings("unchecked")

@@ -86,11 +86,6 @@ public class InGameRewardManager implements YamlMember {
 	}
 
 	@Override
-	public void reload() {
-		this.yamlManager.reload(this);
-	}
-
-	@Override
 	public void setData(YamlManager yamlManager, FileConfiguration config) {
 		this.yamlManager = yamlManager;
 

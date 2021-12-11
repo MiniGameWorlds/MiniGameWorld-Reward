@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.api.MiniGameWorld;
 import com.worldbiomusic.minigameworld.util.Utils;
+import com.worldbiomusic.minigameworldreward.cmd.Commands;
 import com.worldbiomusic.minigameworldreward.giver.InDataRewardGiver;
 import com.worldbiomusic.minigameworldreward.giver.InGameRewardGiver;
 import com.worldbiomusic.minigameworldreward.manager.InDataRewardManager;
@@ -17,12 +18,14 @@ public class MiniGameWorldRewardMain extends JavaPlugin {
 	private InDataRewardManager inDataRewardManager;
 	private InGameRewardGiver inGameRewardGiver;
 	private InDataRewardGiver inDataRewardGiver;
-
+	private Commands commands;
+	private YamlManager yamlManager;
+	
 	public static MiniGameWorldRewardMain getInstance() {
 		return instance;
 	}
 
-	private YamlManager yamlManager;
+	
 
 	@Override
 	public void onEnable() {
@@ -48,6 +51,11 @@ public class MiniGameWorldRewardMain extends JavaPlugin {
 		MiniGameWorld mw = MiniGameWorld.create(MiniGameWorld.API_VERSION);
 		mw.registerMiniGameObserver(this.inGameRewardGiver);
 		mw.registerMiniGameObserver(this.inDataRewardGiver);
+		
+		// command
+		this.commands = new Commands(this.yamlManager);
+		getCommand("reward").setExecutor(this.commands);
+		
 	}
 
 	@Override
