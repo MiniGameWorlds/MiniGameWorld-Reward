@@ -107,7 +107,7 @@ public class InGameRewardGiver implements MiniGameObserver {
 
 		for (int i = 0; i < rankList.size(); i++) {
 			int rankPercent = (int) (((i + 1) / (double) rankList.size()) * 100);
-			
+
 			for (String percentStr : getPercentList()) {
 				int dataPercent = Integer.parseInt(percentStr);
 
@@ -170,8 +170,13 @@ public class InGameRewardGiver implements MiniGameObserver {
 	}
 
 	@SuppressWarnings("unchecked")
+	private Map<String, Object> getRewardData() {
+		return (Map<String, Object>) this.inGameRewardManager.getData().get("reward");
+	}
+
+	@SuppressWarnings("unchecked")
 	private Map<String, Object> getRankReward(int rank) {
-		Map<String, Object> rankReward = (Map<String, Object>) this.inGameRewardManager.getData().get("reward.rank");
+		Map<String, Object> rankReward = (Map<String, Object>) getRewardData().get("rank");
 		return (Map<String, Object>) rankReward.get("" + rank);
 	}
 
@@ -192,13 +197,12 @@ public class InGameRewardGiver implements MiniGameObserver {
 
 	@SuppressWarnings("unchecked")
 	private Set<String> getPercentList() {
-		return ((Map<String, Object>) this.inGameRewardManager.getData().get("reward.percent")).keySet();
+		return ((Map<String, Object>) getRewardData().get("percent")).keySet();
 	}
 
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> getPercentReward(int percent) {
-		Map<String, Object> percentReward = (Map<String, Object>) this.inGameRewardManager.getData()
-				.get("reward.percent");
+		Map<String, Object> percentReward = (Map<String, Object>) getRewardData().get("percent");
 		return (Map<String, Object>) percentReward.get("" + percent);
 	}
 

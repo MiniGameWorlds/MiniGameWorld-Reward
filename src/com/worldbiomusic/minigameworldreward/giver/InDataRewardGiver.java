@@ -9,10 +9,10 @@ import org.bukkit.inventory.ItemStack;
 
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
 import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
+import com.worldbiomusic.minigameworld.observer.MiniGameEventNotifier.MiniGameEvent;
+import com.worldbiomusic.minigameworld.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
 import com.worldbiomusic.minigameworldrank.data.RankData;
-import com.worldbiomusic.minigameworldrank.observer.MiniGameRankNotifier.RankEvent;
-import com.worldbiomusic.minigameworldrank.observer.MiniGameRankObserver;
 import com.worldbiomusic.minigameworldreward.MiniGameWorldRewardMain;
 import com.worldbiomusic.minigameworldreward.manager.InDataRewardManager;
 
@@ -20,7 +20,7 @@ import com.worldbiomusic.minigameworldreward.manager.InDataRewardManager;
  * Give rewards by rank data
  *
  */
-public class InDataRewardGiver implements MiniGameRankObserver {
+public class InDataRewardGiver implements MiniGameObserver {
 	private InDataRewardManager inDataRewardManager;
 	private MiniGameWorldRank minigameRank;
 
@@ -31,8 +31,6 @@ public class InDataRewardGiver implements MiniGameRankObserver {
 		if (isRankDataExist()) {
 			System.out.println("@@@@@@@@@@@@@@ YES @@@@@@@@@@@@@@@@");
 			this.minigameRank = MiniGameWorldRank.create();
-			// register this to rank observer
-			this.minigameRank.registerRankObserver(this);
 		} else {
 			System.out.println("@@@@@@@@@@@@@@ NO @@@@@@@@@@@@@@@@");
 		}
@@ -44,8 +42,12 @@ public class InDataRewardGiver implements MiniGameRankObserver {
 	}
 
 	@Override
-	public void update(MiniGameAccessor minigame, RankEvent event) {
-		if (event == RankEvent.AFTER_DATA_SAVED) {
+	public void update(MiniGameAccessor minigame, MiniGameEvent event) {
+		if (!isRankDataExist()) {
+			return;
+		}
+		
+		if (event == MiniGameEvent.FINISH) {
 			if (!checkMinSavedDataCount(minigame)) {
 				return;
 			}
@@ -106,8 +108,13 @@ public class InDataRewardGiver implements MiniGameRankObserver {
 	}
 
 	@SuppressWarnings("unchecked")
+	private Map<String, Object> getRewardData() {
+		return (Map<String, Object>) this.inDataRewardManager.getData().get("reward");
+	}
+
+	@SuppressWarnings("unchecked")
 	private Map<String, Object> getRankReward(int rank) {
-		Map<String, Object> rankReward = (Map<String, Object>) this.inDataRewardManager.getData().get("reward.rank");
+		Map<String, Object> rankReward = (Map<String, Object>) getRewardData().get("rank");
 		return (Map<String, Object>) rankReward.get("" + rank);
 	}
 
@@ -128,13 +135,12 @@ public class InDataRewardGiver implements MiniGameRankObserver {
 
 	@SuppressWarnings("unchecked")
 	private Set<String> getPercentList() {
-		return ((Map<String, Object>) this.inDataRewardManager.getData().get("reward.percent")).keySet();
+		return ((Map<String, Object>) getRewardData().get("percent")).keySet();
 	}
 
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> getPercentReward(int percent) {
-		Map<String, Object> percentReward = (Map<String, Object>) this.inDataRewardManager.getData()
-				.get("reward.percent");
+		Map<String, Object> percentReward = (Map<String, Object>) getRewardData().get("percent");
 		return (Map<String, Object>) percentReward.get("" + percent);
 	}
 

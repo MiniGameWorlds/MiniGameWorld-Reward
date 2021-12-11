@@ -47,6 +47,7 @@ public class MiniGameWorldRewardMain extends JavaPlugin {
 		// register observer to MiniGameWorld
 		MiniGameWorld mw = MiniGameWorld.create(MiniGameWorld.API_VERSION);
 		mw.registerMiniGameObserver(this.inGameRewardGiver);
+		mw.registerMiniGameObserver(this.inDataRewardGiver);
 	}
 
 	@Override
