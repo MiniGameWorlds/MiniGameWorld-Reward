@@ -1,6 +1,6 @@
 # TODO
 - Add reload command
-
+- Make soft-depend `MiniGameWorld-Rank`
 
 ---
 

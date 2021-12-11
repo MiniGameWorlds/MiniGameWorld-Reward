@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldreward;
+package com.worldbiomusic.minigameworldreward.manager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -13,11 +13,11 @@ import com.wbm.plugin.util.data.yaml.YamlHelper;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.wbm.plugin.util.data.yaml.YamlMember;
 
-public class RewardDataManager implements YamlMember {
+public class InGameRewardManager implements YamlMember {
 	private YamlManager yamlManager;
 	private Map<String, Object> data;
 
-	public RewardDataManager() {
+	public InGameRewardManager() {
 		this.data = new LinkedHashMap<>();
 
 		this.initData();
@@ -29,7 +29,7 @@ public class RewardDataManager implements YamlMember {
 
 	private void initData() {
 		// rewards
-		this.initRewards();
+		this.initRewardData();
 
 		// participant percent
 		this.data.put("min-participant-percent", 50);
@@ -38,69 +38,50 @@ public class RewardDataManager implements YamlMember {
 		this.initActiveTypes();
 	}
 
-	private void initRewards() {
-		/*
-		 * first Rank
-		 */
+	private void initRewardData() {
+		Map<String, Object> reward = new LinkedHashMap<>();
 
-		Map<String, Object> rewardData = new LinkedHashMap<>();
+		this.data.put("reward", reward);
 
-		Map<String, Object> firstRank = new LinkedHashMap<>();
+		Map<String, Object> rank = new LinkedHashMap<>();
+		Map<String, Object> percent = new LinkedHashMap<>();
+		reward.put("rank", rank);
+		reward.put("percent", percent);
+
+		rank.put("1", getRewardDataObject(10, 100));
+		rank.put("2", getRewardDataObject(7, 50));
+		rank.put("3", getRewardDataObject(5, 30));
+
+		percent.put("25", getRewardDataObject(4, 20));
+		percent.put("50", getRewardDataObject(3, 15));
+		percent.put("75", getRewardDataObject(2, 10));
+		percent.put("100", getRewardDataObject(1, 5));
+
+	}
+
+	private Object getRewardDataObject(int itemAmount, int xpAmount) {
+		Map<String, Object> template = new LinkedHashMap<>();
 
 		// items
 		List<ItemStack> firItems = new ArrayList<>();
-		firItems.add(new ItemStack(Material.OAK_WOOD, 5));
-		firItems.add(new ItemStack(Material.COAL, 3));
-		firstRank.put("items", firItems);
+		firItems.add(new ItemStack(Material.OAK_WOOD, itemAmount));
+		firItems.add(new ItemStack(Material.COAL, itemAmount));
+		template.put("items", firItems);
 
 		// xp
-		firstRank.put("xp", 100);
+		template.put("xp", xpAmount);
 
-		rewardData.put("1", firstRank);
-
-		/*
-		 *  second Rank
-		 */
-		Map<String, Object> secondRank = new LinkedHashMap<>();
-
-		// items
-		List<ItemStack> secItems = new ArrayList<>();
-		secItems.add(new ItemStack(Material.OAK_WOOD, 3));
-		secItems.add(new ItemStack(Material.COAL, 2));
-		secondRank.put("items", secItems);
-
-		// xp
-		secondRank.put("xp", 50);
-
-		rewardData.put("2", secondRank);
-
-		/*
-		 *  third Rank
-		 */
-		Map<String, Object> thirdRank = new LinkedHashMap<>();
-
-		// items
-		List<ItemStack> thiItems = new ArrayList<>();
-		thiItems.add(new ItemStack(Material.OAK_WOOD, 1));
-		thiItems.add(new ItemStack(Material.COAL, 1));
-		thirdRank.put("items", thiItems);
-
-		// xp
-		thirdRank.put("xp", 30);
-
-		rewardData.put("3", thirdRank);
-
-		this.data.put("rewards", rewardData);
+		return template;
 	}
-	
+
 	private void initActiveTypes() {
 		Map<String, Object> activeTypes = new LinkedHashMap<>();
-		
+
 		activeTypes.put("solo", false);
 		activeTypes.put("solo-battle", true);
 		activeTypes.put("team", false);
 		activeTypes.put("team-battle", true);
-		
+
 		this.data.put("active-types", activeTypes);
 	}
 
@@ -122,7 +103,7 @@ public class RewardDataManager implements YamlMember {
 
 	@Override
 	public String getFileName() {
-		return "rewards.yml";
+		return "in-game-reward.yml";
 	}
 }
 //
