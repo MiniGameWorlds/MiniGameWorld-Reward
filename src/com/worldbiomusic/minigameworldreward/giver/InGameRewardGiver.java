@@ -12,10 +12,11 @@ import com.worldbiomusic.minigameworld.minigameframes.SoloBattleMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.SoloMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamBattleMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamMiniGame;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 import com.worldbiomusic.minigameworld.observer.MiniGameEventNotifier.MiniGameEvent;
 import com.worldbiomusic.minigameworld.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworld.util.Setting;
+import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldreward.manager.InGameRewardManager;
 
 /**
@@ -50,7 +51,7 @@ public class InGameRewardGiver implements MiniGameObserver {
 	}
 
 	private void giveRankReward(MiniGameAccessor minigame) {
-		List<? extends MiniGameRankComparable> rankList = minigame.getRank();
+		List<? extends MiniGameRankResult> rankList = minigame.getRank();
 
 		for (int i = 0; i < rankList.size(); i++) {
 			if (this.existRankReward(i + 1)) {
@@ -58,14 +59,13 @@ public class InGameRewardGiver implements MiniGameObserver {
 					// give rewards
 					this.giveRankRewards(p, i + 1);
 
-					p.sendMessage("Got rewards");
 				}
 			}
 		}
 	}
 
 	private void givePercentReward(MiniGameAccessor minigame) {
-		List<? extends MiniGameRankComparable> rankList = minigame.getRank();
+		List<? extends MiniGameRankResult> rankList = minigame.getRank();
 
 		for (int i = 0; i < rankList.size(); i++) {
 			int rankPercent = (int) (((i + 1) / (double) rankList.size()) * 100);
@@ -78,8 +78,6 @@ public class InGameRewardGiver implements MiniGameObserver {
 					// give rewards
 					for (Player p : rankList.get(i).getPlayers()) {
 						this.givePercentRewards(p, dataPercent);
-
-						p.sendMessage("Got rewards: " + rankPercent);
 					}
 
 					break;
@@ -112,7 +110,7 @@ public class InGameRewardGiver implements MiniGameObserver {
 
 		double minPercent = (int) this.inGameRewardManager.getData().get("min-participant-percent") / 100.0;
 
-		minigame.getPlayers().forEach(p -> p.sendMessage("participant check: " + (minPercent <= participantPercent)));
+		minigame.getPlayers().forEach(p -> Utils.debug("participant check: " + (minPercent <= participantPercent)));
 
 		return minPercent <= participantPercent;
 	}

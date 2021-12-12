@@ -1,18 +1,30 @@
 # Description
-- Example `third-party` plugin of `MiniGameWorld`
-- Can give rewards to participants when minigame has finished
-- [Release](https://github.com/MiniGameWorlds/MiniGameWorld/discussions/6)
-
-# Rewards
-- Items
-- Xp
+- Give rewards to players when the minigame has finished
 
 # Features
-- Softdepends [MiniGameWorldRank]()
+- Depend on [MiniGameWorld] (always use LATEST API)
+- Also can use with [MiniGameWorldRank] to give reward by saved rank data
+- Can customize rewards with config
 
-# With MiniGameWorldRank
+# Rewards
+- Item
+- Xp
+
+# Commands
+- `/rank reload`: Reload all config from file
+- `/rank save`: Save all data to file
+
+# Soft depend on MiniGameWorldRank
+- If use with [MiniGameWorldRank], can reward to players with saved rank data
+- `in-data-reward.yml` config only works with [MiniGameWorldRank]
 
 # Config
+- `in-game-reward.yml` is only applied between players who played together in the minigame
+- `in-data-reward.yml` is only applied between all saved rank data in the minigame config
+- `reward.percent.<n>` percent(`<n>`) must be sorted in ascending order
+- Can add, remove `rank` or `percent` to `reward.rank`, `reward.percent` list
+- Can add, remove reward `item`, `xp`
+
 ## in-game-reward.yml
 ```yaml
 data:
@@ -102,7 +114,8 @@ data:
     team-battle: true
 
 ```
-- `rewards`: Reward items (can add more rank)
+- `reward.rank.<n>`: Give rewards to `<n>` rank (n >= 1)
+- `reward.percent.<n>`: Give rewards if in `<n>` percent rank (1 <= n <= 100) (e.g. `4` rank of `10` rank = `40%` = not in `25%`, but in `50%`)
 - `min-participant-percent`: Give reward if participants more than `min-participant-percent` percent of `max-player-count`
 - `active-types.<game-type>`: Only give reward to minigame which is set to true
 
@@ -190,15 +203,17 @@ data:
           type: COAL
         xp: 5
 ```
+- `min-saved-data-count`: Give rewards if saved data count in config is bigger than this value
+- `reward.rank.<n>`: Give rewards to `<n>` rank (n >= 1)
+- `reward.percent.<n>`: Give rewards if in `<n>` percent rank (1 <= n <= 100)
 
 
 
 
 
 
-
-
-
+[MiniGameWorld]: https://github.com/MiniGameWorlds/MiniGameWorld
+[MiniGameWorldRank]: https://github.com/MiniGameWorlds/MiniGameWorld-Rank
 
 
 

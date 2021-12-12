@@ -7,8 +7,9 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.wbm.plugin.util.Utils;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankComparable;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 import com.worldbiomusic.minigameworld.observer.MiniGameEventNotifier.MiniGameEvent;
 import com.worldbiomusic.minigameworld.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
@@ -29,10 +30,10 @@ public class InDataRewardGiver implements MiniGameObserver {
 
 		// load MiniGameWorldRank if exist (softdepend)
 		if (isRankDataExist()) {
-			System.out.println("@@@@@@@@@@@@@@ YES @@@@@@@@@@@@@@@@");
+			Utils.info("MiniGameWorld-Reward loaded with MiniGameWorld-Rank");
 			this.minigameRank = MiniGameWorldRank.create();
 		} else {
-			System.out.println("@@@@@@@@@@@@@@ NO @@@@@@@@@@@@@@@@");
+			Utils.info("MiniGameWorld-Reward loaded without MiniGameWorld-Rank");
 		}
 	}
 
@@ -46,14 +47,14 @@ public class InDataRewardGiver implements MiniGameObserver {
 		if (!isRankDataExist()) {
 			return;
 		}
-		
+
 		if (event == MiniGameEvent.FINISH) {
 			if (!checkMinSavedDataCount(minigame)) {
 				return;
 			}
 
-			List<? extends MiniGameRankComparable> compList = minigame.getRank();
-			for (MiniGameRankComparable comp : compList) {
+			List<? extends MiniGameRankResult> compList = minigame.getRank();
+			for (MiniGameRankResult comp : compList) {
 				List<Player> players = comp.getPlayers();
 				int rank = getRankFromData(minigame, players);
 
@@ -70,7 +71,6 @@ public class InDataRewardGiver implements MiniGameObserver {
 		if (existRankReward(rank)) {
 			players.forEach(p -> {
 				giveRankRewards(p, rank);
-				p.sendMessage("Got rewards from rank data");
 			});
 		}
 	}
@@ -83,9 +83,8 @@ public class InDataRewardGiver implements MiniGameObserver {
 			if (rankPercent <= dataPercent) {
 				players.forEach(p -> {
 					givePercentRewards(p, rankPercent);
-					p.sendMessage("Got rewards from percent data");
 				});
-				
+
 				break;
 			}
 		}
