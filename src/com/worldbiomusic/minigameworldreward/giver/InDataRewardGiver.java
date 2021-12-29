@@ -9,9 +9,9 @@ import org.bukkit.inventory.ItemStack;
 
 import com.wbm.plugin.util.Utils;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
+import com.worldbiomusic.minigameworld.api.observer.MiniGameEventNotifier.MiniGameEvent;
+import com.worldbiomusic.minigameworld.api.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
-import com.worldbiomusic.minigameworld.observer.MiniGameEventNotifier.MiniGameEvent;
-import com.worldbiomusic.minigameworld.observer.MiniGameObserver;
 import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
 import com.worldbiomusic.minigameworldrank.data.RankData;
 import com.worldbiomusic.minigameworldreward.MiniGameWorldRewardMain;
