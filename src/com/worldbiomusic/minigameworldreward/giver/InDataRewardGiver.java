@@ -5,12 +5,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import com.wbm.plugin.util.Utils;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
-import com.worldbiomusic.minigameworld.api.observer.MiniGameEventNotifier.MiniGameEvent;
-import com.worldbiomusic.minigameworld.api.observer.MiniGameObserver;
+import com.worldbiomusic.minigameworld.customevents.minigame.MiniGameFinishEvent;
 import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
 import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
 import com.worldbiomusic.minigameworldrank.data.RankData;
@@ -21,7 +22,7 @@ import com.worldbiomusic.minigameworldreward.manager.InDataRewardManager;
  * Give rewards by rank data
  *
  */
-public class InDataRewardGiver implements MiniGameObserver {
+public class InDataRewardGiver implements Listener {
 	private InDataRewardManager inDataRewardManager;
 	private MiniGameWorldRank minigameRank;
 
@@ -42,28 +43,33 @@ public class InDataRewardGiver implements MiniGameObserver {
 				.isPluginEnabled("MiniGameWorld-Rank");
 	}
 
-	@Override
-	public void update(MiniGameAccessor minigame, MiniGameEvent event) {
+	/**
+	 * Give rewards when finish
+	 * 
+	 * @param e Event when a minigame has finished
+	 */
+	@EventHandler
+	public void onMiniGameFinish(MiniGameFinishEvent e) {
+		MiniGameAccessor minigame = e.getMiniGame();
+
 		if (!isRankDataExist()) {
 			return;
 		}
 
-		if (event == MiniGameEvent.FINISH) {
-			if (!checkMinSavedDataCount(minigame)) {
-				return;
-			}
+		if (!checkMinSavedDataCount(minigame)) {
+			return;
+		}
 
-			List<? extends MiniGameRankResult> compList = minigame.getRank();
-			for (MiniGameRankResult comp : compList) {
-				List<Player> players = comp.getPlayers();
-				int rank = getRankFromData(minigame, players);
+		List<? extends MiniGameRankResult> compList = minigame.getRank();
+		for (MiniGameRankResult comp : compList) {
+			List<Player> players = comp.getPlayers();
+			int rank = getRankFromData(minigame, players);
 
-				// give rank reward
-				giveRankReward(players, rank);
+			// give rank reward
+			giveRankReward(players, rank);
 
-				// give percent reward
-				givePercentReward(players, rank, compList.size());
-			}
+			// give percent reward
+			givePercentReward(players, rank, compList.size());
 		}
 	}
 

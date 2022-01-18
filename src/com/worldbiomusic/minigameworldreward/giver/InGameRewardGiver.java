@@ -5,11 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
-import com.worldbiomusic.minigameworld.api.observer.MiniGameEventNotifier.MiniGameEvent;
-import com.worldbiomusic.minigameworld.api.observer.MiniGameObserver;
+import com.worldbiomusic.minigameworld.customevents.minigame.MiniGameFinishEvent;
 import com.worldbiomusic.minigameworld.minigameframes.SoloBattleMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.SoloMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamBattleMiniGame;
@@ -23,31 +24,37 @@ import com.worldbiomusic.minigameworldreward.manager.InGameRewardManager;
  * Give rewards by played players rank
  *
  */
-public class InGameRewardGiver implements MiniGameObserver {
+public class InGameRewardGiver implements Listener {
 	private InGameRewardManager inGameRewardManager;
 
 	public InGameRewardGiver(InGameRewardManager inGameRewardManager) {
 		this.inGameRewardManager = inGameRewardManager;
 	}
 
-	@Override
-	public void update(MiniGameAccessor minigame, MiniGameEvent event) {
-		// give rewards when finish
-		if (event == MiniGameEvent.FINISH) {
-			// check type
-			if (!this.checkMiniGameType(minigame)) {
-				return;
-			}
+	/**
+	 * Give rewards when finish
+	 * 
+	 * @param e Event when a minigame has finished
+	 */
+	@EventHandler
+	public void onMiniGameFinish(MiniGameFinishEvent e) {
+		MiniGameAccessor minigame = e.getMiniGame();
 
-			// check participant percent
-			if (!this.checkParticipantPercent(minigame)) {
-				return;
-			}
-
-			giveRankReward(minigame);
-
-			givePercentReward(minigame);
+		// check type
+		if (!this.checkMiniGameType(minigame)) {
+			return;
 		}
+
+		// check participant percent
+		if (!this.checkParticipantPercent(minigame)) {
+			return;
+		}
+
+		// rank reward
+		giveRankReward(minigame);
+
+		// percent reward
+		givePercentReward(minigame);
 	}
 
 	private void giveRankReward(MiniGameAccessor minigame) {
@@ -110,7 +117,8 @@ public class InGameRewardGiver implements MiniGameObserver {
 
 		double minPercent = (int) this.inGameRewardManager.getData().get("min-participant-percent") / 100.0;
 
-		minigame.getPlayers().forEach(p -> Utils.debug("participant check: " + (minPercent <= participantPercent)));
+		Utils.debug("Player count: " + leavingPlayerCount);
+		Utils.debug("In Game Participant check: " + (minPercent <= participantPercent));
 
 		return minPercent <= participantPercent;
 	}

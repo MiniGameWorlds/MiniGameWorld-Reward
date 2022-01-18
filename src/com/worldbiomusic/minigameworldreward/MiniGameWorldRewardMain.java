@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.wbm.plugin.util.data.yaml.YamlManager;
-import com.worldbiomusic.minigameworld.api.MiniGameWorld;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldreward.cmd.Commands;
 import com.worldbiomusic.minigameworldreward.giver.InDataRewardGiver;
@@ -47,10 +46,9 @@ public class MiniGameWorldRewardMain extends JavaPlugin {
 		this.yamlManager.registerMember(inGameRewardManager);
 		this.yamlManager.registerMember(inDataRewardManager);
 
-		// register observer to MiniGameWorld
-		MiniGameWorld mw = MiniGameWorld.create(MiniGameWorld.API_VERSION);
-		mw.registerMiniGameObserver(this.inGameRewardGiver);
-		mw.registerMiniGameObserver(this.inDataRewardGiver);
+		// register reward listener
+		getServer().getPluginManager().registerEvents((this.inGameRewardGiver), this);
+		getServer().getPluginManager().registerEvents((this.inDataRewardGiver), this);
 		
 		// command
 		this.commands = new Commands(this.yamlManager);
