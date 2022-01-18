@@ -14,6 +14,9 @@
 - Soft-depend on `MiniGameWorld-Rank` (reward by saved rank data)
 - Add `reload`, `save` command
 
+## 1.2
+- Update for API 0.4.0
+
 ---
 
 # 2021-11-25
@@ -25,3 +28,7 @@
 - Soft-depend on `MiniGameWorld-Rank` (reward by saved rank data)
 - Add `reload`, `save` command
 - Release 1.1
+
+# 2022-01-19
+- Update for API 0.4.0
+- Release `1.2`
