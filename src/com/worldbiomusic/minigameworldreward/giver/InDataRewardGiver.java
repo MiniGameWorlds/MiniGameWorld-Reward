@@ -88,7 +88,7 @@ public class InDataRewardGiver implements Listener {
 			// inner percent
 			if (rankPercent <= dataPercent) {
 				players.forEach(p -> {
-					givePercentRewards(p, rankPercent);
+					givePercentRewards(p, dataPercent);
 				});
 
 				break;

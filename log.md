@@ -1,8 +1,8 @@
 # TODO
-- Release own github (link release page in discussion)
-
+- Release own github
 
 ---
+
 # Version Changes
 ## 1.0
 - Can reward `items`, `xp`
@@ -16,6 +16,9 @@
 
 ## 1.2
 - Update for API 0.4.0
+
+## 1.3
+- Fix in-game-data reward bug
 
 ---
 
@@ -32,3 +35,7 @@
 # 2022-01-19
 - Update for API 0.4.0
 - Release `1.2`
+
+# 2022-02-14
+- Fix in-game-data reward bug
+- Release `1.3`
