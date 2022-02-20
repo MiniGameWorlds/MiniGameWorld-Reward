@@ -39,3 +39,7 @@
 # 2022-02-14
 - Fix in-game-data reward bug
 - Release `1.3`
+
+# 2022-02-20
+- Add BStats
+- Release `1.4`

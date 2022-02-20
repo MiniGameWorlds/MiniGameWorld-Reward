@@ -3,6 +3,7 @@ package com.worldbiomusic.minigameworldreward;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.wbm.plugin.util.Metrics;
 import com.wbm.plugin.util.data.yaml.YamlManager;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldreward.cmd.Commands;
@@ -19,12 +20,10 @@ public class MiniGameWorldRewardMain extends JavaPlugin {
 	private InDataRewardGiver inDataRewardGiver;
 	private Commands commands;
 	private YamlManager yamlManager;
-	
+
 	public static MiniGameWorldRewardMain getInstance() {
 		return instance;
 	}
-
-	
 
 	@Override
 	public void onEnable() {
@@ -32,6 +31,9 @@ public class MiniGameWorldRewardMain extends JavaPlugin {
 		instance = this;
 
 		Utils.info(ChatColor.GREEN + "MiniGameWorld Reward ON");
+
+		// bstats
+		new Metrics(this, 14385);
 
 		// data manager with config
 		this.inGameRewardManager = new InGameRewardManager();
@@ -49,11 +51,11 @@ public class MiniGameWorldRewardMain extends JavaPlugin {
 		// register reward listener
 		getServer().getPluginManager().registerEvents((this.inGameRewardGiver), this);
 		getServer().getPluginManager().registerEvents((this.inDataRewardGiver), this);
-		
+
 		// command
 		this.commands = new Commands(this.yamlManager);
 		getCommand("reward").setExecutor(this.commands);
-		
+
 	}
 
 	@Override
