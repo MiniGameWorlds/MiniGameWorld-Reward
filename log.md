@@ -1,24 +1,5 @@
 # TODO
-- Release own github
 
----
-
-# Version Changes
-## 1.0
-- Can reward `items`, `xp`
-- Can edit reward in config
-- Not stable
-
-## 1.1
-- Change reward method (rank or percent)
-- Soft-depend on `MiniGameWorld-Rank` (reward by saved rank data)
-- Add `reload`, `save` command
-
-## 1.2
-- Update for API 0.4.0
-
-## 1.3
-- Fix in-game-data reward bug
 
 ---
 
@@ -43,3 +24,18 @@
 # 2022-02-20
 - Add BStats
 - Release `1.4`
+
+# 2022-03-18
+- Update for latest API
+- Release `1.5`
+
+
+
+
+
+
+
+
+
+
+`

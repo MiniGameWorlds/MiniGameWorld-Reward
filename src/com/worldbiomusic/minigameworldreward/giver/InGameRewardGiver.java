@@ -16,7 +16,6 @@ import com.worldbiomusic.minigameworld.minigameframes.SoloMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamBattleMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
-import com.worldbiomusic.minigameworld.util.Setting;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldreward.manager.InGameRewardManager;
 
@@ -111,7 +110,7 @@ public class InGameRewardGiver implements Listener {
 	}
 
 	private boolean checkParticipantPercent(MiniGameAccessor minigame) {
-		int maxPlayerCount = (int) minigame.getSettings().get(Setting.MINIGAMES_MAX_PLAYER_COUNT);
+		int maxPlayerCount = minigame.getSettings().getMaxPlayerCount();
 		int leavingPlayerCount = minigame.getPlayers().size();
 		double participantPercent = (double) leavingPlayerCount / maxPlayerCount;
 
