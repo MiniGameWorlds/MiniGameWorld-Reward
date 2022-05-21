@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import com.wbm.plugin.util.Utils;
 import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
 import com.worldbiomusic.minigameworld.customevents.minigame.MiniGameFinishEvent;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank;
 import com.worldbiomusic.minigameworldrank.api.MiniGameWorldRank;
 import com.worldbiomusic.minigameworldrank.data.RankData;
 import com.worldbiomusic.minigameworldreward.MiniGameWorldRewardMain;
@@ -60,8 +60,8 @@ public class InDataRewardGiver implements Listener {
 			return;
 		}
 
-		List<? extends MiniGameRankResult> compList = minigame.getRank();
-		for (MiniGameRankResult comp : compList) {
+		List<? extends MiniGameRank> compList = minigame.getRank();
+		for (MiniGameRank comp : compList) {
 			List<Player> players = comp.getPlayers();
 			int rank = getRankFromData(minigame, players);
 

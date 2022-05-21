@@ -15,7 +15,7 @@ import com.worldbiomusic.minigameworld.minigameframes.SoloBattleMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.SoloMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamBattleMiniGame;
 import com.worldbiomusic.minigameworld.minigameframes.TeamMiniGame;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRankResult;
+import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank;
 import com.worldbiomusic.minigameworld.util.Utils;
 import com.worldbiomusic.minigameworldreward.manager.InGameRewardManager;
 
@@ -57,7 +57,7 @@ public class InGameRewardGiver implements Listener {
 	}
 
 	private void giveRankReward(MiniGameAccessor minigame) {
-		List<? extends MiniGameRankResult> rankList = minigame.getRank();
+		List<? extends MiniGameRank> rankList = minigame.getRank();
 
 		for (int i = 0; i < rankList.size(); i++) {
 			if (this.existRankReward(i + 1)) {
@@ -71,7 +71,7 @@ public class InGameRewardGiver implements Listener {
 	}
 
 	private void givePercentReward(MiniGameAccessor minigame) {
-		List<? extends MiniGameRankResult> rankList = minigame.getRank();
+		List<? extends MiniGameRank> rankList = minigame.getRank();
 
 		for (int i = 0; i < rankList.size(); i++) {
 			int rankPercent = (int) (((i + 1) / (double) rankList.size()) * 100);
@@ -110,7 +110,7 @@ public class InGameRewardGiver implements Listener {
 	}
 
 	private boolean checkParticipantPercent(MiniGameAccessor minigame) {
-		int maxPlayerCount = minigame.getSettings().getMaxPlayerCount();
+		int maxPlayerCount = minigame.getSettings().getMaxPlayers();
 		int leavingPlayerCount = minigame.getPlayers().size();
 		double participantPercent = (double) leavingPlayerCount / maxPlayerCount;
 

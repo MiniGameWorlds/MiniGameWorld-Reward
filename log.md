@@ -29,7 +29,9 @@
 - Update for latest API
 - Release `1.5`
 
-
+# 2022-05-21
+- Update for latest API
+- Release `1.6`
 
 
 
