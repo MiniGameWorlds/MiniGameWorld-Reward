@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldreward.giver;
+package com.minigameworldreward.giver;
 
 import java.util.List;
 import java.util.Map;
@@ -9,15 +9,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import com.worldbiomusic.minigameworld.api.MiniGameAccessor;
-import com.worldbiomusic.minigameworld.customevents.minigame.MiniGameFinishEvent;
-import com.worldbiomusic.minigameworld.minigameframes.SoloBattleMiniGame;
-import com.worldbiomusic.minigameworld.minigameframes.SoloMiniGame;
-import com.worldbiomusic.minigameworld.minigameframes.TeamBattleMiniGame;
-import com.worldbiomusic.minigameworld.minigameframes.TeamMiniGame;
-import com.worldbiomusic.minigameworld.minigameframes.helpers.MiniGameRank;
-import com.worldbiomusic.minigameworld.util.Utils;
-import com.worldbiomusic.minigameworldreward.manager.InGameRewardManager;
+import com.minigameworld.api.MiniGameAccessor;
+import com.minigameworld.events.minigame.MiniGameFinishEvent;
+import com.minigameworld.frames.SoloBattleMiniGame;
+import com.minigameworld.frames.SoloMiniGame;
+import com.minigameworld.frames.TeamBattleMiniGame;
+import com.minigameworld.frames.TeamMiniGame;
+import com.minigameworld.frames.helpers.MiniGameRank;
+import com.minigameworld.util.Utils;
+import com.minigameworldreward.manager.InGameRewardManager;
 
 /**
  * Give rewards by played players rank

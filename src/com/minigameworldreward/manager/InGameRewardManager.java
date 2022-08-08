@@ -1,4 +1,4 @@
-package com.worldbiomusic.minigameworldreward.manager;
+package com.minigameworldreward.manager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

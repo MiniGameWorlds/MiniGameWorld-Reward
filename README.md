@@ -1,9 +1,9 @@
 # Description
-- Give rewards to players when the minigame has finished
+Give rewards to players when the minigame has finished
 
 # Features
 - Depend on [MiniGameWorld] (always use LATEST API)
-- Also can use with [MiniGameWorldRank] to give reward by saved rank data
+- Also can use with [MiniGameWorld-Rank] to give reward by saved rank data
 - Can customize rewards with config
 
 # Rewards
@@ -11,12 +11,12 @@
 - Xp
 
 # Commands
-- `/rank reload`: Reload all config from file
-- `/rank save`: Save all data to file
+- `/reward reload`: Reload all config from file
+- `/reward save`: Save all data to file
 
 # Soft depend on MiniGameWorldRank
-- If use with [MiniGameWorldRank], can reward to players with saved rank data
-- `in-data-reward.yml` config only works with [MiniGameWorldRank]
+- If use with [MiniGameWorld-Rank], can reward to players with saved rank data
+- `in-data-reward.yml` config only works with [MiniGameWorld-Rank]
 
 # Config
 - `in-game-reward.yml` is only applied between players who played together in the minigame
@@ -116,7 +116,7 @@ data:
 ```
 - `reward.rank.<n>`: Give rewards to `<n>` rank (n >= 1)
 - `reward.percent.<n>`: Give rewards if in `<n>` percent rank (1 <= n <= 100) (e.g. `4` rank of `10` rank = `40%` = not in `25%`, but in `50%`)
-- `min-participant-percent`: Give reward if participants more than `min-participant-percent` percent of `max-player-count`
+- `min-participant-percent`: Give reward if participants exist more than `min-participant-percent` percent of `max-player-count`
 - `active-types.<game-type>`: Only give reward to minigame which is set to true
 
 
@@ -203,7 +203,7 @@ data:
           type: COAL
         xp: 5
 ```
-- `min-saved-data-count`: Give rewards if saved data count in config is bigger than this value
+- `min-saved-data-count`: Give rewards if saved data count in the config is equal or bigger than the value
 - `reward.rank.<n>`: Give rewards to `<n>` rank (n >= 1)
 - `reward.percent.<n>`: Give rewards if in `<n>` percent rank (1 <= n <= 100)
 
@@ -213,7 +213,7 @@ data:
 
 
 [MiniGameWorld]: https://github.com/MiniGameWorlds/MiniGameWorld
-[MiniGameWorldRank]: https://github.com/MiniGameWorlds/MiniGameWorld-Rank
+[MiniGameWorld-Rank]: https://github.com/MiniGameWorlds/MiniGameWorld-Rank
 
 
 

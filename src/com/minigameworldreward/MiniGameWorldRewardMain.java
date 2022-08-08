@@ -1,16 +1,16 @@
-package com.worldbiomusic.minigameworldreward;
+package com.minigameworldreward;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.wbm.plugin.util.Metrics;
 import com.wbm.plugin.util.data.yaml.YamlManager;
-import com.worldbiomusic.minigameworld.util.Utils;
-import com.worldbiomusic.minigameworldreward.cmd.Commands;
-import com.worldbiomusic.minigameworldreward.giver.InDataRewardGiver;
-import com.worldbiomusic.minigameworldreward.giver.InGameRewardGiver;
-import com.worldbiomusic.minigameworldreward.manager.InDataRewardManager;
-import com.worldbiomusic.minigameworldreward.manager.InGameRewardManager;
+import com.minigameworld.util.Utils;
+import com.minigameworldreward.cmd.Commands;
+import com.minigameworldreward.giver.InDataRewardGiver;
+import com.minigameworldreward.giver.InGameRewardGiver;
+import com.minigameworldreward.manager.InDataRewardManager;
+import com.minigameworldreward.manager.InGameRewardManager;
 
 public class MiniGameWorldRewardMain extends JavaPlugin {
 	private static MiniGameWorldRewardMain instance;
