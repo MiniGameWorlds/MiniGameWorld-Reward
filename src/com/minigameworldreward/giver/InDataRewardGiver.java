@@ -61,7 +61,7 @@ public class InDataRewardGiver implements Listener {
 			return;
 		}
 
-		List<? extends MiniGameRank> compList = minigame.getRank();
+		List<? extends MiniGameRank> compList = minigame.rank();
 		for (MiniGameRank comp : compList) {
 			List<Player> players = comp.getPlayers();
 			int rank = getRankFromData(minigame, players);

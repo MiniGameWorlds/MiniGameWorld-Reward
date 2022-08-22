@@ -1,6 +1,6 @@
 name: MiniGameWorld-Reward
 main: com.minigameworldreward.MiniGameWorldRewardMain
-version: 1.6
+version: 1.7
 author: worldbiomusic
 description: minigame reward plugin of MiniGameWorld 
 api-version: 1.14

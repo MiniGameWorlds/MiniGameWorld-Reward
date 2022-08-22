@@ -57,7 +57,7 @@ public class InGameRewardGiver implements Listener {
 	}
 
 	private void giveRankReward(MiniGameAccessor minigame) {
-		List<? extends MiniGameRank> rankList = minigame.getRank();
+		List<? extends MiniGameRank> rankList = minigame.rank();
 
 		for (int i = 0; i < rankList.size(); i++) {
 			if (this.existRankReward(i + 1)) {
@@ -71,7 +71,7 @@ public class InGameRewardGiver implements Listener {
 	}
 
 	private void givePercentReward(MiniGameAccessor minigame) {
-		List<? extends MiniGameRank> rankList = minigame.getRank();
+		List<? extends MiniGameRank> rankList = minigame.rank();
 
 		for (int i = 0; i < rankList.size(); i++) {
 			int rankPercent = (int) (((i + 1) / (double) rankList.size()) * 100);
@@ -96,7 +96,7 @@ public class InGameRewardGiver implements Listener {
 		@SuppressWarnings("unchecked")
 		Map<String, Object> activeTypes = (Map<String, Object>) this.inGameRewardManager.getData().get("active-types");
 
-		Class<?> clazz = minigame.getClassType();
+		Class<?> clazz = minigame.classType();
 		if (SoloMiniGame.class.isAssignableFrom(clazz)) {
 			return (boolean) activeTypes.get("solo");
 		} else if (SoloBattleMiniGame.class.isAssignableFrom(clazz)) {
@@ -110,8 +110,8 @@ public class InGameRewardGiver implements Listener {
 	}
 
 	private boolean checkParticipantPercent(MiniGameAccessor minigame) {
-		int maxPlayerCount = minigame.getSettings().getMaxPlayers();
-		int leavingPlayerCount = minigame.getPlayers().size();
+		int maxPlayerCount = minigame.settings().getMaxPlayers();
+		int leavingPlayerCount = minigame.players().size();
 		double participantPercent = (double) leavingPlayerCount / maxPlayerCount;
 
 		double minPercent = (int) this.inGameRewardManager.getData().get("min-participant-percent") / 100.0;
